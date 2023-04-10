@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3Dキューブを表示する</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- model viewerコンポーネントを読み込む -->
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.0.1/model-viewer.min.js"></script>
+
+  <model-viewer 
+    src="amatech-ar.glb"
+    ar 
+    camera-controls 
+    touch-action="pan-y"
+    class="model-viewer"
+  >
+  </model-viewer>
+
+  <!-- カラーセレクター -->
+  <select id="color">
+    <option value="red">red</option>
+    <option value="blue">blue</option>
+  </select>
+
+  <script>
+    // model viewerの要素を取ってくる
+    const modelViewer = document.querySelector('model-viewer');
+
+    // カラーセレクターの要素を取ってくる
+    const colorSelector = document.getElementById('color');
+    // カラーセレクターの値が変更されたとき
+    colorSelector.addEventListener('input',(event)=>{
+      // model viewerで定義された3Dモデルのマテリアルを取得
+      let material = modelViewer.model.materials[0];
+      // マテリアルのカラーを、カラーセレクターの値に変更
+      material.pbrMetallicRoughness.setBaseColorFactor(event.target.value)
+    })
+  </script>
+</body>
+</html>
